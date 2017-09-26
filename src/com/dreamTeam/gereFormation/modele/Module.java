@@ -24,5 +24,8 @@ public class Module {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public String toString() {
+		return "le module " + name + ".";
+	}
 }

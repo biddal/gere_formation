@@ -1,6 +1,7 @@
 package com.dreamTeam.gereFormation.modele;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Formation {
 	
@@ -9,6 +10,7 @@ public class Formation {
 	private int duration;
 	private Date date_debut;
 	private String lieu;
+	private List<Module> modules;
 	
 	
 	public Formation() {
@@ -51,5 +53,29 @@ public class Formation {
 	}
 	public void setLieu(String lieu) {
 		this.lieu = lieu;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Formation other = (Formation) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	public String toString() {
+		return "de la formation " + name + " " + "d'une duree de " +  duration+ ".";
 	}
 }

@@ -1,13 +1,15 @@
 package com.dreamTeam.gereFormation.dao;
 
-import java.util.List;
-import java.sql.Statement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.dreamTeam.gereFormation.modele.Formation;
 import com.dreamTeam.gereFormation.modele.Stagiaire;
 
 public class StagiaireDao {
@@ -17,9 +19,17 @@ public class StagiaireDao {
         PreparedStatement stm;
         try {
 
-            stm = c.prepareStatement("UPDATE Stagiaire SET name = ? WHERE id = ?");
+            stm = c.prepareStatement("UPDATE stagiaire SET name = ? ,firstname = ?, adresse = ? ,code_postal = ? ,ville = ?, email = ? ,telephone = ?, date_naissance = ?, idformation = ? WHERE id = ?");
             stm.setString(1, s.getName());
-            stm.setInt(2, s.getId());
+            stm.setString(2, s.getFirstname());
+            stm.setString(3, s.getAdresse());
+            stm.setString(4, s.getCode_postal());
+            stm.setString(5, s.getVille());
+            stm.setString(6, s.getEmail());
+            stm.setString(7, s.getTelephone());
+            stm.setDate(8, s.getDate());
+            stm.setInt(9, s.getFormation().getId());
+            stm.setInt(10, s.getId());
 
             stm.executeUpdate();
 
@@ -34,7 +44,7 @@ public class StagiaireDao {
         PreparedStatement stm;
         try {
 
-            stm = c.prepareStatement("DELETE FROM Stagiaire WHERE id = ?");
+            stm = c.prepareStatement("DELETE FROM stagiaire WHERE id = ?");
             stm.setInt(1, s.getId());
 
             stm.executeUpdate();
@@ -50,7 +60,7 @@ public class StagiaireDao {
         Connection c = DBConnect.getConnection();
         PreparedStatement stm;
 
-        stm = c.prepareStatement("INSERT INTO Stagiaire (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+        stm = c.prepareStatement("INSERT INTO stagiaire (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
         stm.setString(1, s.getName());
 
         stm.execute();
@@ -78,14 +88,24 @@ public class StagiaireDao {
         try {
             stm = c.createStatement();
 
-            String sql = "select * from Stagiaire left join formation on Stagiaire.idformation = formation.id left join ecf on Stagiaire.id = ecf.idstagiaire";
+            String sql = "select * from stagiaire" /*left join formation on Stagiaire.idformation = formation.id left join ecf on Stagiaire.id = ecf.idstagiaire*/;
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
-                int id = rs.getInt("Stagiaire.id");
-                String name = rs.getString("Stagiaire.name");
+                int id = rs.getInt("stagiaire.id");
+                String name = rs.getString("stagiaire.name");
+                String firstname = rs.getString("stagiaire.firstname");
+                String adresse = rs.getString("stagiaire.adresse");
+                String code_postal = rs.getString("stagiaire.code_postal");
+                String ville = rs.getString("stagiaire.ville");
+                String email = rs.getString("stagiaire.email");
+                String telephone = rs.getString("stagiaire.telephone");
+                Date date = rs.getDate("stagiaire.date_naissance");
+                int id_formation = rs.getInt("stagiaire.idformation");
                 
-                Stagiaire s = new Stagiaire(id, name);
+                Formation formation = FormationDao.findById(id_formation);
+                
+                Stagiaire s = new Stagiaire(id, name, firstname, adresse, code_postal, ville, email, telephone, date, formation);
                 
                /* int villeId = rs.getInt("ville.id");
                 if (!rs.wasNull()){ 
@@ -115,14 +135,24 @@ public class StagiaireDao {
         try {
             stm = c.createStatement();
 
-            String sql = "select * from Stagiaire WHERE Stagiaire.id=" + numStagiaire;
+            String sql = "select * from stagiaire WHERE stagiaire.id=" + numStagiaire;
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
+            	int id = rs.getInt("stagiaire.id");
+                String name = rs.getString("stagiaire.name");
+                String firstname = rs.getString("stagiaire.firstname");
+                String adresse = rs.getString("stagiaire.adresse");
+                String code_postal = rs.getString("stagiaire.code_postal");
+                String ville = rs.getString("stagiaire.ville");
+                String email = rs.getString("stagiaire.email");
+                String telephone = rs.getString("stagiaire.telephone");
+                Date date = rs.getDate("stagiaire.date_naissance");
+                int id_formation = rs.getInt("stagiaire.idformation");
                 
-                s = new Stagiaire(id, name);
+                Formation formation = FormationDao.findById(id_formation);
+                
+                s = new Stagiaire(id, name, firstname, adresse, code_postal, ville, email, telephone, date, formation);
 
             }
             rs.close();

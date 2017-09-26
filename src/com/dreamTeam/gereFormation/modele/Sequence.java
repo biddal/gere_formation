@@ -24,4 +24,7 @@ public class Sequence {
 	public void setName(String name) {
 		this.name = name;
 	}	
+	public String toString() {
+		return "La sequence est " + name + ". ";
+	}
 }

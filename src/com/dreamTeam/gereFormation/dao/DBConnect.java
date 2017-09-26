@@ -6,27 +6,28 @@ import java.sql.SQLException;
 
 public class DBConnect {
 	
-	 private static Connection conn =null;
-
-	 final static String URL = "jdbc:mysql://localhost/gere_formation";
+	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private static final String URL = "jdbc:mysql://localhost/gere_formation?noAccessToProcedureBodies=true";
+	private static final String USER = "root";
+	private static final String PWD = "Stackable25";
+	private static Connection conn = null;
         /**
          * 
          * @return RunTimeException() if any pb
          */
-        public static Connection  getConnection () 
+        public static Connection getConnection () 
         {
             if (conn==null) {
 
                      try
                      {
-                         Class.forName("com.mysql.jdbc.Driver").newInstance();
+                         Class.forName(DRIVER).newInstance();
 
                        // 
-                         conn=  DriverManager.getConnection(URL,"root","Stackable25");
+                         conn=  DriverManager.getConnection(URL,USER, PWD);
                      }
                        catch(SQLException sqlE)
                        {
-                               //TODO Logging
                            System.out.println("Sql Erreur " + sqlE.getMessage());
                            throw new RuntimeException();
                        }

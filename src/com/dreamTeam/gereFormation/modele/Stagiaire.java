@@ -1,9 +1,10 @@
 package com.dreamTeam.gereFormation.modele;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 
-public class Stagiaire {
+public class Stagiaire implements Serializable {
 	private int id;
 	private String name;
 	private String firstname;
@@ -18,13 +19,15 @@ public class Stagiaire {
 	public Stagiaire() {
 		
 	}
-	
-public Stagiaire(int id, String name) {
+	public Stagiaire(String name) {
+		super();
+		this.name = name;
+	}	
+	public Stagiaire(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
-	
 	public Stagiaire(int id, String name, String firstname, String adresse,
 			String code_postal, String ville, String email, String telephone,
 			Date date, Formation formation) {
@@ -103,5 +106,31 @@ public Stagiaire(int id, String name) {
 	}
 	public void setFormation(Formation formation) {
 		this.formation = formation;
+	}
+	
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Stagiaire other = (Stagiaire) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	public String toString() {
+		return "Je m'appelle " + name + " " + firstname + " et je suis de la formation" + formation.getName() ;
 	}
 }
