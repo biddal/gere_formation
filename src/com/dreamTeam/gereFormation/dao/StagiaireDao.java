@@ -19,7 +19,7 @@ public class StagiaireDao {
         PreparedStatement stm;
         try {
 
-            stm = c.prepareStatement("UPDATE stagiaire SET name = ? ,firstname = ?, adresse = ? ,code_postal = ? ,ville = ?, email = ? ,telephone = ?, date_naissance = ?, idformation = ? WHERE id = ?");
+            stm = c.prepareStatement("UPDATE stagiaire SET name = ? ,firstname = ?, adresse = ? ,code_postal = ? ,ville = ?, email = ? ,telephone = ?, date_naissance = ? WHERE id = ?");
             stm.setString(1, s.getName());
             stm.setString(2, s.getFirstname());
             stm.setString(3, s.getAdresse());
@@ -28,8 +28,7 @@ public class StagiaireDao {
             stm.setString(6, s.getEmail());
             stm.setString(7, s.getTelephone());
             stm.setDate(8, s.getDate());
-            stm.setInt(9, s.getFormation().getId());
-            stm.setInt(10, s.getId());
+            stm.setInt(9, s.getId());
 
             stm.executeUpdate();
 
@@ -88,7 +87,8 @@ public class StagiaireDao {
         try {
             stm = c.createStatement();
 
-            String sql = "select * from stagiaire" /*left join formation on Stagiaire.idformation = formation.id left join ecf on Stagiaire.id = ecf.idstagiaire*/;
+            String sql = "select * from stagiaire left join gestion_stagiaire on stagiaire.id = gestion_stagiaire.idstagiaire left join" +
+            		" formation on formation.id = gestion_stagiaire.idformation WHERE gestion_stagiaire.idformation='1' "; /*left join formation on Stagiaire.idformation = formation.id left join ecf on Stagiaire.id = ecf.idstagiaire*/;
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
@@ -101,9 +101,9 @@ public class StagiaireDao {
                 String email = rs.getString("stagiaire.email");
                 String telephone = rs.getString("stagiaire.telephone");
                 Date date = rs.getDate("stagiaire.date_naissance");
-                int id_formation = rs.getInt("stagiaire.idformation");
+                 int idformation = rs.getInt("gestion_stagiaire.idformation");
                 
-                Formation formation = FormationDao.findById(id_formation);
+                Formation formation = FormationDao.findById(idformation);
                 
                 Stagiaire s = new Stagiaire(id, name, firstname, adresse, code_postal, ville, email, telephone, date, formation);
                 
@@ -135,7 +135,8 @@ public class StagiaireDao {
         try {
             stm = c.createStatement();
 
-            String sql = "select * from stagiaire WHERE stagiaire.id=" + numStagiaire;
+            String sql = "select * from stagiaire left join gestion_stagiaire on stagiaire.id = gestion_stagiaire.idstagiaire left join" +
+            		" formation on formation.id = gestion_stagiaire.idformation WHERE stagiaire.id=" + numStagiaire;
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
@@ -148,7 +149,7 @@ public class StagiaireDao {
                 String email = rs.getString("stagiaire.email");
                 String telephone = rs.getString("stagiaire.telephone");
                 Date date = rs.getDate("stagiaire.date_naissance");
-                int id_formation = rs.getInt("stagiaire.idformation");
+                int id_formation = rs.getInt("gestion_stagiaire.idformation");
                 
                 Formation formation = FormationDao.findById(id_formation);
                 
@@ -158,7 +159,7 @@ public class StagiaireDao {
             rs.close();
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
 
         return s;

@@ -23,18 +23,36 @@ public class gereFormation {
 	 */
 	public static void main(String[] args) throws Exception {
 		
+		
+		
 		List<Stagiaire> stagiaires = StagiaireDao.findAll();
 		List<Sequence> sequences = SequenceDao.findAll();
 		List<Formation> formations = FormationDao.findAll();
 		List<Module> modules = ModuleDao.findAll();
 		List<Ecf> ecfs = EcfDao.findAll();
 		// TODO Auto-generated method stub
-		Stagiaire biddal = StagiaireDao.findById(3);
+		Stagiaire biddal = StagiaireDao.findById(2);
 		biddal.setFirstname("JC");
 		try {
 			StagiaireDao.update(biddal);
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
+		}
+		
+		for (Stagiaire stagiaire : stagiaires) {
+			System.out.println(stagiaire);
+		}
+		
+		for (Sequence sequence : sequences) {
+			System.out.println(sequence);
+		}
+		
+		for (Formation formation : formations) {
+			System.out.println(formation);
+		}
+		
+		for (Module module : modules) {
+			System.out.println(module);
 		}
 	}
 

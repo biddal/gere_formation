@@ -14,7 +14,7 @@ public class Stagiaire implements Serializable {
 	private String email;
 	private String telephone;
 	private Date date;
-	private Formation formation;
+    private Formation formation;
 	
 	public Stagiaire() {
 		
@@ -130,6 +130,7 @@ public class Stagiaire implements Serializable {
 			return false;
 		return true;
 	}
+	
 	public String toString() {
 		return "Je m'appelle " + name + " " + firstname + " et je suis de la formation" + formation.getName() ;
 	}

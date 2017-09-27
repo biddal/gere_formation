@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dreamTeam.gereFormation.modele.Formation;
+import com.dreamTeam.gereFormation.modele.Stagiaire;
 
 
 public class FormationDao {
@@ -91,6 +92,8 @@ public class FormationDao {
                 Date date_debut =rs.getDate("formation.date_debut");
                 String lieu = rs.getString("formation.lieu");
                 
+                //List<Stagiaire> stagiaire = getStagiaires(id);
+                
                 
                 
                 Formation f = new Formation(id, name, duration,date_debut,lieu);
@@ -115,6 +118,18 @@ public class FormationDao {
 
         return ps;
     }
+    /*
+    private Formation getFormation(ResultSet rs){
+    	int id = rs.getInt("id");
+        
+        String name = rs.getString("name");
+        int duration = rs.getInt("duration");
+        Date date_debut = rs.getDate("date_debut");
+        String lieu = rs.getString("lieu");
+        
+        
+        return new Formation(id, name,duration,date_debut,lieu);
+    }*/
 
     public static Formation findById(int numFormation) {
         Formation f = null;
@@ -147,5 +162,41 @@ public class FormationDao {
         return f;
     }
 
+    public static List<Stagiaire> getStagiaires(Formation f) {
+    	List<Stagiaire> stagiaires = new ArrayList<>();
+    	
+    	Connection c = DBConnect.getConnection();
+        Statement stm;
+        try {
+            stm = c.createStatement();
 
+            String sql = "select * from stagiaire left join gestion_stagiaire on stagiaire.id = gestion_stagiaire.idstagiaire left join formation on formation.id = gestion_stagiaire.idformation";
+            //String sql = "select * from gestion_stagiaire WHERE idformation=" + f.getId();
+            ResultSet rs = stm.executeQuery(sql);
+
+            if (rs.next()) {
+            	int idStagiaire = rs.getInt("stagiaire.id");
+                String name = rs.getString("stagiaire.name");
+                String firstname = rs.getString("stagiaire.firstname");
+                String adresse = rs.getString("stagiaire.adresse");
+                String code_postal = rs.getString("stagiaire.code_postal");
+                String ville = rs.getString("stagiaire.ville");
+                String email = rs.getString("stagiaire.email");
+                String telephone = rs.getString("stagiaire.telephone");
+                Date date = rs.getDate("stagiaire.date_naissance");
+                
+                
+                
+                Stagiaire s = new Stagiaire(idStagiaire, name, firstname, adresse, code_postal, ville, email, telephone, date, f);
+                stagiaires.add(s);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+        	
+            throw new RuntimeException();
+        }
+
+        return stagiaires;
+    }
 }

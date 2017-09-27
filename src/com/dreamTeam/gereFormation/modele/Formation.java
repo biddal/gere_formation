@@ -11,10 +11,11 @@ public class Formation {
 	private Date date_debut;
 	private String lieu;
 	private List<Module> modules;
-	
+	private List<Stagiaire> stagiaires;
 	
 	public Formation() {
 	}
+	
 	public Formation(int id, String name, int duration, Date date_debut,
 			String lieu) {
 		super();
@@ -24,6 +25,21 @@ public class Formation {
 		this.date_debut = date_debut;
 		this.lieu = lieu;
 	}
+	
+	public Formation(int id, String name, int duration, Date date_debut,
+			String lieu, List<Module> modules, List<Stagiaire> stagiaires) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.duration = duration;
+		this.date_debut = date_debut;
+		this.lieu = lieu;
+		this.modules = modules;
+		this.stagiaires = stagiaires;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -53,6 +69,18 @@ public class Formation {
 	}
 	public void setLieu(String lieu) {
 		this.lieu = lieu;
+	}	
+	public List<Module> getModules() {
+		return modules;
+	}
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
+	public List<Stagiaire> getStagiaires() {
+		return stagiaires;
+	}
+	public void setStagiaires(List<Stagiaire> stagiaires) {
+		this.stagiaires = stagiaires;
 	}
 	
 	@Override
@@ -75,6 +103,7 @@ public class Formation {
 			return false;
 		return true;
 	}
+	
 	public String toString() {
 		return "de la formation " + name + " " + "d'une duree de " +  duration+ ".";
 	}
