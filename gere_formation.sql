@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Lun 25 Septembre 2017 à 16:27
+-- Généré le :  Mer 27 Septembre 2017 à 11:08
 -- Version du serveur :  5.7.19-0ubuntu0.17.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.17.04.1
 
@@ -27,10 +27,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `ecf` (
+  `id` int(11) NOT NULL,
   `idstagiaire` int(11) NOT NULL,
   `idmodule` int(11) NOT NULL,
   `validate` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `ecf`
+--
+
+INSERT INTO `ecf` (`id`, `idstagiaire`, `idmodule`, `validate`) VALUES
+(1, 2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -46,6 +54,13 @@ CREATE TABLE `formation` (
   `lieu` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `formation`
+--
+
+INSERT INTO `formation` (`id`, `name`, `duration`, `date_debut`, `lieu`) VALUES
+(1, 'développeur ', 8, '2017-09-14', 'Morlaix');
+
 -- --------------------------------------------------------
 
 --
@@ -56,6 +71,13 @@ CREATE TABLE `gestion_formation` (
   `idformation` int(11) NOT NULL,
   `idmodule` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `gestion_formation`
+--
+
+INSERT INTO `gestion_formation` (`idformation`, `idmodule`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -68,6 +90,14 @@ CREATE TABLE `gestion_sequence` (
   `idsequence` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `gestion_sequence`
+--
+
+INSERT INTO `gestion_sequence` (`idmodule`, `idsequence`) VALUES
+(1, 2),
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +109,13 @@ CREATE TABLE `module` (
   `name` varchar(256) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `module`
+--
+
+INSERT INTO `module` (`id`, `name`) VALUES
+(1, 'WEB');
+
 -- --------------------------------------------------------
 
 --
@@ -87,8 +124,16 @@ CREATE TABLE `module` (
 
 CREATE TABLE `sequence` (
   `id` int(11) NOT NULL,
-  `name` varchar(256) CHARACTER SET latin1 NOT NULL
+  `name` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `sequence`
+--
+
+INSERT INTO `sequence` (`id`, `name`) VALUES
+(1, 'html'),
+(2, 'css');
 
 -- --------------------------------------------------------
 
@@ -99,15 +144,23 @@ CREATE TABLE `sequence` (
 CREATE TABLE `stagiaire` (
   `id` int(11) NOT NULL,
   `name` varchar(256) NOT NULL,
-  `firstname` varchar(256) NOT NULL,
-  `adresse` varchar(256) NOT NULL,
-  `code_postal` varchar(256) NOT NULL,
-  `ville` varchar(256) NOT NULL,
-  `email` varchar(256) NOT NULL,
-  `telephone` varchar(256) NOT NULL,
-  `date_naissance` date NOT NULL,
-  `idformation` int(11) NOT NULL
+  `firstname` varchar(256) DEFAULT NULL,
+  `adresse` varchar(256) DEFAULT NULL,
+  `code_postal` varchar(256) DEFAULT NULL,
+  `ville` varchar(256) DEFAULT NULL,
+  `email` varchar(256) DEFAULT NULL,
+  `telephone` varchar(256) DEFAULT NULL,
+  `date_naissance` date DEFAULT NULL,
+  `idformation` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `stagiaire`
+--
+
+INSERT INTO `stagiaire` (`id`, `name`, `firstname`, `adresse`, `code_postal`, `ville`, `email`, `telephone`, `date_naissance`, `idformation`) VALUES
+(2, 'joudar', 'hasnae', '18  alle jfjjfjf', '22190', 'plerin', 'hahahah@gmail.com', '06 06 06 06 06 ', '2017-09-21', 1),
+(3, 'biddal', 'JC', '12 FHHFLHFHFLHF', '220000', 'SAINT BRIEUC', 'VGKJGKJF@GMAIL.COM', '01 02 01 01 02', '2017-09-08', 1);
 
 --
 -- Index pour les tables exportées
@@ -117,6 +170,7 @@ CREATE TABLE `stagiaire` (
 -- Index pour la table `ecf`
 --
 ALTER TABLE `ecf`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idstagiaire` (`idstagiaire`),
   ADD KEY `idmodule` (`idmodule`);
 
@@ -164,25 +218,30 @@ ALTER TABLE `stagiaire`
 --
 
 --
+-- AUTO_INCREMENT pour la table `ecf`
+--
+ALTER TABLE `ecf`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT pour la table `formation`
 --
 ALTER TABLE `formation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `module`
 --
 ALTER TABLE `module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `sequence`
 --
 ALTER TABLE `sequence`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `stagiaire`
 --
 ALTER TABLE `stagiaire`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Contraintes pour les tables exportées
 --
