@@ -53,7 +53,7 @@ public class ModuleDao {
         Connection c = DBConnect.getConnection();
         PreparedStatement stm;
 
-        stm = c.prepareStatement("INSERT INTO module (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+        stm = c.prepareStatement("INSERT INTO module (name,) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
         stm.setString(1, m.getName());
 
         stm.execute();

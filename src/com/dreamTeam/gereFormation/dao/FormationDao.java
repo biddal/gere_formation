@@ -1,7 +1,7 @@
 package com.dreamTeam.gereFormation.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,8 +54,11 @@ public class FormationDao {
         Connection c = DBConnect.getConnection();
         PreparedStatement stm;
 
-        stm = c.prepareStatement("INSERT INTO formation (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+        stm = c.prepareStatement("INSERT INTO formation (name,duration,date_debut,lieu) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         stm.setString(1, s.getName());
+        stm.setInt(2, s.getDuration());
+        stm.setDate(3, new java.sql.Date(s.getDate_debut().getTime()));
+        stm.setString(4, s.getLieu());
 
         stm.execute();
         ResultSet rs = stm.getGeneratedKeys();

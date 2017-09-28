@@ -1,7 +1,7 @@
 package com.dreamTeam.gereFormation.modele;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 
 public class Stagiaire implements Serializable {
@@ -28,6 +28,20 @@ public class Stagiaire implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
+	public Stagiaire( String name, String firstname, String adresse,
+			String code_postal, String ville, String email, String telephone,
+			Date date) {
+		super();
+		this.name = name;
+		this.firstname = firstname;
+		this.adresse = adresse;
+		this.code_postal = code_postal;
+		this.ville = ville;
+		this.email = email;
+		this.telephone = telephone;
+		this.date = date;
+
+	}
 	public Stagiaire(int id, String name, String firstname, String adresse,
 			String code_postal, String ville, String email, String telephone,
 			Date date, Formation formation) {
@@ -44,7 +58,6 @@ public class Stagiaire implements Serializable {
 		this.formation = formation;
 	}
 	
-
 	public String getName() {
 		return name;
 	}
@@ -132,6 +145,6 @@ public class Stagiaire implements Serializable {
 	}
 	
 	public String toString() {
-		return "Je m'appelle " + name + " " + firstname + " et je suis de la formation" + formation.getName() ;
+		return "Je m'appelle " + name + " " + firstname;
 	}
 }

@@ -1,10 +1,10 @@
 package com.dreamTeam.gereFormation;
 
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
-import com.dreamTeam.gereFormation.dao.FormationDao;
 import com.dreamTeam.gereFormation.dao.EcfDao;
+import com.dreamTeam.gereFormation.dao.FormationDao;
 import com.dreamTeam.gereFormation.dao.ModuleDao;
 import com.dreamTeam.gereFormation.dao.SequenceDao;
 import com.dreamTeam.gereFormation.dao.StagiaireDao;
@@ -31,10 +31,10 @@ public class gereFormation {
 		List<Module> modules = ModuleDao.findAll();
 		List<Ecf> ecfs = EcfDao.findAll();
 		// TODO Auto-generated method stub
-		Stagiaire biddal = StagiaireDao.findById(2);
-		biddal.setFirstname("JC");
+		Stagiaire stagi = new Stagiaire("golgot","henry","15 rue fdsfs","25242","mon cul","hasnae@claquetachatte.com","3615hulla", new Date());
+
 		try {
-			StagiaireDao.update(biddal);
+			StagiaireDao.save(stagi);
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
