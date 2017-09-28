@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Mer 27 Septembre 2017 à 11:08
+-- Généré le :  Jeu 28 Septembre 2017 à 11:06
 -- Version du serveur :  5.7.19-0ubuntu0.17.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.17.04.1
 
@@ -101,6 +101,24 @@ INSERT INTO `gestion_sequence` (`idmodule`, `idsequence`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `gestion_stagiaire`
+--
+
+CREATE TABLE `gestion_stagiaire` (
+  `idformation` int(11) NOT NULL,
+  `idstagiaire` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `gestion_stagiaire`
+--
+
+INSERT INTO `gestion_stagiaire` (`idformation`, `idstagiaire`) VALUES
+(1, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `module`
 --
 
@@ -150,17 +168,17 @@ CREATE TABLE `stagiaire` (
   `ville` varchar(256) DEFAULT NULL,
   `email` varchar(256) DEFAULT NULL,
   `telephone` varchar(256) DEFAULT NULL,
-  `date_naissance` date DEFAULT NULL,
-  `idformation` int(11) DEFAULT NULL
+  `date_naissance` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `stagiaire`
 --
 
-INSERT INTO `stagiaire` (`id`, `name`, `firstname`, `adresse`, `code_postal`, `ville`, `email`, `telephone`, `date_naissance`, `idformation`) VALUES
-(2, 'joudar', 'hasnae', '18  alle jfjjfjf', '22190', 'plerin', 'hahahah@gmail.com', '06 06 06 06 06 ', '2017-09-21', 1),
-(3, 'biddal', 'JC', '12 FHHFLHFHFLHF', '220000', 'SAINT BRIEUC', 'VGKJGKJF@GMAIL.COM', '01 02 01 01 02', '2017-09-08', 1);
+INSERT INTO `stagiaire` (`id`, `name`, `firstname`, `adresse`, `code_postal`, `ville`, `email`, `telephone`, `date_naissance`) VALUES
+(2, 'joudar', 'JC', '18  alle jfjjfjf', '22190', 'plerin', 'hahahah@gmail.com', '06 06 06 06 06 ', '2017-09-21'),
+(6, 'golgot', 'henry', '15 rue fdsfs', '25242', 'mon cul', 'hasnae@claquetachatte.com', '3615hulla', '2017-09-28'),
+(7, 'golgot', 'henry', '15 rue fdsfs', '25242', 'mon cul', 'hasnae@claquetachatte.com', '3615hulla', '2017-09-28');
 
 --
 -- Index pour les tables exportées
@@ -195,6 +213,13 @@ ALTER TABLE `gestion_sequence`
   ADD KEY `idsequence` (`idsequence`);
 
 --
+-- Index pour la table `gestion_stagiaire`
+--
+ALTER TABLE `gestion_stagiaire`
+  ADD KEY `idformation` (`idformation`),
+  ADD KEY `idstagiaire` (`idstagiaire`);
+
+--
 -- Index pour la table `module`
 --
 ALTER TABLE `module`
@@ -210,8 +235,7 @@ ALTER TABLE `sequence`
 -- Index pour la table `stagiaire`
 --
 ALTER TABLE `stagiaire`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idformation` (`idformation`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -241,7 +265,7 @@ ALTER TABLE `sequence`
 -- AUTO_INCREMENT pour la table `stagiaire`
 --
 ALTER TABLE `stagiaire`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Contraintes pour les tables exportées
 --
@@ -268,10 +292,11 @@ ALTER TABLE `gestion_sequence`
   ADD CONSTRAINT `gestion_sequence_ibfk_2` FOREIGN KEY (`idmodule`) REFERENCES `module` (`id`);
 
 --
--- Contraintes pour la table `stagiaire`
+-- Contraintes pour la table `gestion_stagiaire`
 --
-ALTER TABLE `stagiaire`
-  ADD CONSTRAINT `stagiaire_ibfk_1` FOREIGN KEY (`idformation`) REFERENCES `formation` (`id`);
+ALTER TABLE `gestion_stagiaire`
+  ADD CONSTRAINT `gestion_stagiaire_ibfk_1` FOREIGN KEY (`idstagiaire`) REFERENCES `stagiaire` (`id`),
+  ADD CONSTRAINT `gestion_stagiaire_ibfk_2` FOREIGN KEY (`idformation`) REFERENCES `formation` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
